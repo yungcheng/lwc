@@ -13,12 +13,11 @@ module.exports = {
 
     roots: ['<rootDir>/src'],
 
-    // Override global threshold for the package. As we increase the test coverage we should increase
-    // the threshold as well.
     coverageThreshold: {
         global: {
-            ...BASE_CONFIG.coverageThreshold.global,
-            branches: 60,
+            branches: 95,
+            functions: 95,
+            lines: 95,
         },
     },
 };

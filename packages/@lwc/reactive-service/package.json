@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "LWC Reactive Service",
     "license": "MIT",
-    "main": "dist/commonjs/es2017/reactive.js",
     "module": "dist/modules/es2017/reactive.js",
+    "main": "lib/index.js",
     "typings": "lib/index.d.ts",
     "scripts": {
         "clean": "rm -rf dist/ lib/",
