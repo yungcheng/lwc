@@ -110,7 +110,6 @@ export interface UninitializedVM {
     component?: ComponentInterface;
     cmpRoot?: ShadowRoot;
     tro?: ReactiveObserver;
-    oar?: Record<PropertyKey, ReactiveObserver>;
 }
 
 export interface VM extends UninitializedVM {
@@ -119,8 +118,6 @@ export interface VM extends UninitializedVM {
     cmpRoot: ShadowRoot;
     /** Template Reactive Observer to observe values used by the selected template */
     tro: ReactiveObserver;
-    /** Reactive Observers for each of the public @api accessors */
-    oar: Record<PropertyKey, ReactiveObserver>;
 }
 
 let idx: number = 0;
@@ -173,14 +170,10 @@ function resetComponentStateWhenRemoved(vm: VM) {
     }
     const { state } = vm;
     if (state !== VMState.disconnected) {
-        const { oar, tro } = vm;
+        const { tro } = vm;
         // Making sure that any observing record will not trigger the rehydrated on this vm
         if (!isNull(tro)) {
             tro.reset();
-        }
-        // Making sure that any observing accessor record will not trigger the setter to be reinvoked
-        for (const key in oar) {
-            oar[key].reset();
         }
         runDisconnectedCallback(vm);
         // Spec: https://dom.spec.whatwg.org/#concept-node-remove (step 14-15)
@@ -252,7 +245,6 @@ export function createVM(elm: HTMLElement, Ctor: ComponentConstructor, options: 
         component: undefined,
         cmpRoot: undefined,
         tro: undefined,
-        oar: undefined,
     };
 
     if (process.env.NODE_ENV !== 'production') {
